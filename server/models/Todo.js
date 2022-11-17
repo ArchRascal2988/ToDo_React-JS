@@ -15,6 +15,11 @@ const ToDoSc= new Schema(
             min: 1,
             max: 3,
             required: false
+        },
+        userId:{
+            type: Schema.Types.ObjectId,
+            ref: 'user',
+            required: true
         }
     },
     {
@@ -22,6 +27,6 @@ const ToDoSc= new Schema(
     }
 );
 
-const Todo= model("todos", ToDoSc);
+const Todo= model("Todo", ToDoSc);
 
 module.exports= Todo;
