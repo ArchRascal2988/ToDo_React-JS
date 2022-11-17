@@ -8,25 +8,20 @@ const ToDoSc= new Schema(
         },
         description: {
             type: String,
-            required: true
-        },
-        isDone: {
-            type: Boolean,
-            required: true,
-            default: false
+            required: false
         },
         urgency: {
             type: Number, 
             min: 1,
             max: 3,
-            required: true
+            required: false
         }
     },
     {
-        timestamps: true
+        timestamps: false
     }
 );
 
-const Todos= model("todos", ToDoSc);
+const Todo= model("todos", ToDoSc);
 
-module.exports= Todos;
+module.exports= Todo;

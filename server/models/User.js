@@ -18,6 +18,6 @@ const UserSc= new Schema(
     }
 );
 
-const Users= model("users", UserSc);
+const User= model("users", UserSc);
 
-module.exports= Todos;
+module.exports= User;
