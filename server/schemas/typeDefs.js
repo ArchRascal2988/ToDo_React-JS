@@ -21,9 +21,9 @@ type Query{
 type Mutation{
     newUser(username: String!, password: String!): User
     login(username: String!, password: String!): User
-    newToDo(task: String!, description: String, urgency: Int): Todo
-    editToDo(task: String, description: String, urgency: Int): Todo
-    crossOff(_id: ID!): User
+    newToDo(task: String!, description: String, urgency: Int, userId: ID!): Todo
+    editToDo(tId: ID!, task: String, description: String, urgency: Int): Todo
+    crossOff(_id: ID!): Todo
 }
 `
 
