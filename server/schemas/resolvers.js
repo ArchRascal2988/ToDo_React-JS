@@ -8,10 +8,15 @@ const resolvers= {
     },
     Mutation:{
         newUser: async(parent, args)=>{
-            return await User.create(args);
+            const newU= await User.create(args);
+            return newU._id;
         },
-        login: async(parent, args)=>{
-            return await User.find(args);
+        login: async(parent, {username, password}, context)=>{
+            const loginU= await User.find({username: username});
+            
+            if(loginU && loginU.checkPw(password)){
+                return loginU._id;
+            } else return null;
         },
         newToDo: async(parent, args)=>{
             return await Todo.create(args);

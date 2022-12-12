@@ -14,13 +14,17 @@ type User{
     password: String
 }
 
+type Auth{
+    userId: ID!
+}
+
 type Query{
     allTodos(uId: ID!): [Todo]
 }
 
 type Mutation{
-    newUser(username: String!, password: String!): User
-    login(username: String!, password: String!): User
+    newUser(username: String!, password: String!): Auth
+    login(username: String!, password: String!): Auth
     newToDo(task: String!, description: String, urgency: Int, userId: ID!): Todo
     editToDo(tId: ID!, task: String, description: String, urgency: Int): Todo
     crossOff(_id: ID!): Todo

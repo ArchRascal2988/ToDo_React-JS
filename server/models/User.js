@@ -1,4 +1,5 @@
 const {Schema, model} = require("mongoose");
+const {compareSync, hashSync} = require("bcrypt");
 
 const UserSc= new Schema(
     {
@@ -13,8 +14,20 @@ const UserSc= new Schema(
             minLength: 8,
             unique: true
         }
+    },
+    {
+        methods:{
+            checkPw(pw){
+                return compareSync(pw, this.password);
+            }
+        }
+
     }
 );
+
+UserSc.pre('save', ()=>{
+    return hashSync(this.password, 10)
+})
 
 const User= model("User", UserSc);
 
