@@ -20,7 +20,7 @@ type Auth{
 }
 
 type Query{
-    allTodos(uId: ID!): [Todo]
+    allTodos: [Todo]
 }
 
 type Mutation{

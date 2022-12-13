@@ -10,7 +10,9 @@ const resolvers= {
     },
     Mutation:{
         newUser: async(parent, args)=>{
-            return await User.create(args);
+            const newU= await User.create(args);
+
+            
         },
         login: async(parent, {username, password}, context)=>{
             const loginU= await User.find({username: username});

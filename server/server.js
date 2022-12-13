@@ -3,12 +3,14 @@ const { ApolloServer } = require('apollo-server-express');
 
 const {typeDefs, resolvers}= require('./schemas')
 const db = require('./config/connection');
+const contextActions= require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const server= new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: contextActions
 });
 
 app.use(express.urlencoded({ extended: false }));
