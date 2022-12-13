@@ -14,8 +14,9 @@ type User{
     password: String
 }
 
-type Saved{
-    userId: ID!
+type Auth{
+    token: ID!
+    currUser: User
 }
 
 type Query{
@@ -23,9 +24,9 @@ type Query{
 }
 
 type Mutation{
-    newUser(username: String!, password: String!): Saved
-    login(username: String!, password: String!): Saved
-    newToDo(task: String!, description: String, urgency: Int, userId: ID!): Todo
+    newUser(username: String!, password: String!): Auth
+    login(username: String!, password: String!): Auth
+    newToDo(task: String!, description: String, urgency: Int): Todo
     editToDo(tId: ID!, task: String, description: String, urgency: Int): Todo
     crossOff(_id: ID!): Todo
 }

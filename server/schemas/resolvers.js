@@ -3,14 +3,14 @@ const { Todo, User }= require('../models');
 
 const resolvers= {
     Query:{
-        allTodos: async(parent, args, {_id})=>{
-            return await Todo.find(_id);
+        allTodos: async(parent, args, context)=>{
+            console.log(context)
+            return await Todo.find({userId: context.user._id});
         }
     },
     Mutation:{
         newUser: async(parent, args)=>{
-            const newU= await User.create(args);
-            return newU._id;
+            return await User.create(args);
         },
         login: async(parent, {username, password}, context)=>{
             const loginU= await User.find({username: username});
@@ -19,8 +19,8 @@ const resolvers= {
                 return loginU._id;
             } else throw new AuthenticationError("Could not login, username or password is inccorect.");
         },
-        newToDo: async(parent, args)=>{
-            return await Todo.create(args);
+        newToDo: async(parent, {task, description, urgency}, context)=>{
+            return await Todo.create({task: task, description: description, urgency: urgency, userId: context.user._id});
         },
         editToDo: async(parent, args)=>{
             return await Todo.findOneAndUpdate({_id: tId},{$set:{args}},{new: true});

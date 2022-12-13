@@ -4,9 +4,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <p> hello!</p>
-    </div>
+    <main>
+      <div> hello world</div>
+
+      <Router>
+          <Routes>
+
+          </Routes>
+      </Router>
+    </main>
   );
 }
 
