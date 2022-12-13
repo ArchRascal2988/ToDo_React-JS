@@ -14,7 +14,7 @@ type User{
     password: String
 }
 
-type Auth{
+type Saved{
     userId: ID!
 }
 
@@ -23,8 +23,8 @@ type Query{
 }
 
 type Mutation{
-    newUser(username: String!, password: String!): Auth
-    login(username: String!, password: String!): Auth
+    newUser(username: String!, password: String!): Saved
+    login(username: String!, password: String!): Saved
     newToDo(task: String!, description: String, urgency: Int, userId: ID!): Todo
     editToDo(tId: ID!, task: String, description: String, urgency: Int): Todo
     crossOff(_id: ID!): Todo

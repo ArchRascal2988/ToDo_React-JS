@@ -1,9 +1,10 @@
+const { AuthenticationError } = require('apollo-server-express');
 const { Todo, User }= require('../models');
 
 const resolvers= {
     Query:{
-        allTodos: async(parent, {uId})=>{
-            return await Todo.find({userId: uId});
+        allTodos: async(parent, args, {_id})=>{
+            return await Todo.find(_id);
         }
     },
     Mutation:{
@@ -16,13 +17,13 @@ const resolvers= {
             
             if(loginU && loginU.checkPw(password)){
                 return loginU._id;
-            } else return null;
+            } else throw new AuthenticationError("Could not login, username or password is inccorect.");
         },
         newToDo: async(parent, args)=>{
             return await Todo.create(args);
         },
-        editToDo: async(parent, {tId, task, description, urgency})=>{
-            return await Todo.findOneAndUpdate({_id: tId},{$set:{"task": task, "description": description, "urgency": urgency}},{new: true});
+        editToDo: async(parent, args)=>{
+            return await Todo.findOneAndUpdate({_id: tId},{$set:{args}},{new: true});
         },
         crossOff: async(parent, args)=>{
             return await Todo.deleteOne(args);
