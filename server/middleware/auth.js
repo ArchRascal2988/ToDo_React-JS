@@ -1,24 +1,30 @@
 const { AuthenticationError } = require('apollo-server-express/dist');
-const jwt= require('jsonwebtoken');
+const {sign, verify}= require('jsonwebtoken');
 const secret= 'oooh';
 const expiration= '24h';
 
 
 module.exports={
-    authentication: ({req})=>{
-        let token= req.body.token || req.headers.authentication || req.query.token;
+    authenticate: ({req})=>{
+        let token= req.body.token || req.headers.authorization || req.query.token;
+
+        if(req.headers.authorization) token= token.split(' ').pop().trim();
+        
+        if (!token) return req;
+        
         try{
-            if (!token) return req;
-            else req.user= jwt.verify(token, secret, {maxAge: expiration});
+            console.log('hello2');
+            req.id= verify(token, secret, {maxAge: expiration}).then(({data})=> data);
+            console.log(req.id);
         } catch{
             throw new AuthenticationError("Invalid token");
         }
-
+        
         return req;
     },
-    signToken: ({id})=>{
-        const payload= {id};
+    signToken: ({_id})=>{
+        const payload= {_id};
 
-        return jwt.sign({data: payload}, secret, {expiresIn: expiration});
+        return sign({data: payload}, secret, {expiresIn: expiration});
     }
 }
