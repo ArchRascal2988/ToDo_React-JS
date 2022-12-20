@@ -1,14 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { Router, Routes, Route} from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
 
+import Home from './componets/pages/Home';
+ 
 const endpoint= createHttpLink({
   uri: '/graphql',
 });
 
 const setHeader= setContext((_, {headers}) => {
-    const token= localStorage.getItem('id_token');
+    const token= localStorage.getItem('currUser');
 
     return {
       headers:{
@@ -26,15 +28,12 @@ const client= new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <main>
-      <div> hello world</div>
-
       <Router>
-          <Routes>
-
-          </Routes>
+        <Routes>
+          <Route path='/' element={Landing}></Route>
+          <Route path='/home' element={Home}></Route>
+        </Routes>
       </Router>
-    </main>
     </ApolloProvider>
   );
 }

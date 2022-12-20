@@ -14,11 +14,10 @@ const resolvers= {
     Mutation:{
         newUser: async(parent, args)=>{
             const newU= await User.create(args);
-            const token= signToken(newU);
             
-            return {token, currUser: newU};
+            return signToken(newU);
         },
-        login: async(parent, {username, password}, context)=>{
+        login: async(parent, {username, password})=>{
             const loginU= await User.find({username: username});
             
             if(loginU && loginU.checkPw(password)){

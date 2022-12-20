@@ -7,7 +7,7 @@ const expiration= '24h';
 module.exports={
     authenticate: ({req})=>{
         let token= req.body.token || req.headers.authorization || req.query.token;
-
+        console.log(token);
         if(req.headers.authorization) token= token.split(' ').pop().trim();
         
         if (!token) return req;
