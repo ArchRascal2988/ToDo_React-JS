@@ -1,13 +1,15 @@
-import { checkExpiration } from '../../utils/Auth';
-import { useState, useEffect } from 'react';
+import Auth from '../../utils/Auth';
 
 import TodoList from '../TodoList';
 
 const Home= ()=>{
-    setInterval( checkExpiration(), 60000)
-
+    setInterval( Auth.checkExpiration(), 60000);
+    
     return(
-        <TodoList></TodoList>
+        <div>
+            Hello.
+            <TodoList></TodoList>
+        </div>
     )
 }
 

@@ -1,14 +1,13 @@
-import { decode } from 'jwt-decode';
-
+import decode from 'jwt-decode';
+import { Navigate } from 'react-router-dom';
 class Auth {
     login(jwt){
         localStorage.setItem('currUser', jwt);
-        window.location= '/home';
     }
 
     logout(){
         localStorage.removeItem();
-        window.location= '/';
+        <Navigate to={'/'}></Navigate>
     }
 
     loggedIn(){
@@ -28,4 +27,4 @@ class Auth {
     }
 }
 
-export default new Auth;
+export default new Auth();

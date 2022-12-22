@@ -1,9 +1,10 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
-import { Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
 
 import Home from './componets/pages/Home';
+import Landing from './componets/pages/Landing';
  
 const endpoint= createHttpLink({
   uri: '/graphql',
@@ -27,14 +28,12 @@ const client= new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client={client}>
       <Router>
         <Routes>
-          <Route path='/' element={Landing}></Route>
-          <Route path='/home' element={Home}></Route>
+          <Route path="/" element={<Landing/>}></Route>
+          <Route path="/home" element={<Home/>}></Route>
         </Routes>
       </Router>
-    </ApolloProvider>
   );
 }
 
