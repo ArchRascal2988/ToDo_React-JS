@@ -14,16 +14,18 @@ const resolvers= {
     Mutation:{
         newUser: async(parent, args)=>{
             const newU= await User.create(args);
-            
-            return signToken(newU);
+            return {
+                token: signToken(newU)
+            };
         },
         login: async(parent, {username, password})=>{
-            const loginU= await User.find({username: username});
+            const loginU= await User.findOne({username: username});
+            const check= await loginU.checkPw(password)
             
-            if(loginU && loginU.checkPw(password)){
-                const token= signToken(loginU);
-            
-                return {token, loginU};
+            if(loginU && check){
+                return {
+                    token: signToken(loginU)
+                };
             } else throw new AuthenticationError("Could not login, username or password is inccorect.");
         },
         newToDo: async(parent, {task, description, urgency}, {id})=>{

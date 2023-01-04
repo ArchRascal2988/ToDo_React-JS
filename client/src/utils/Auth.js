@@ -1,21 +1,21 @@
 import decode from 'jwt-decode';
-import { Navigate } from 'react-router-dom';
 class Auth {
     login(jwt){
-        localStorage.setItem('currUser', jwt);
+        localStorage.setItem('id_token', jwt);
+        window.location.replace('/home');
     }
 
     logout(){
         localStorage.removeItem();
-        <Navigate to={'/'}></Navigate>
+        window.location.replace('/');
     }
 
     loggedIn(){
         return this.getToken() ? true : false;
     }
 
-    checkExpiration(token){
-        const { exp }= decode(token);
+    checkExpiration(){
+        const { exp }= decode(this.getToken);
 
         if(exp < Date.now()/1000){
             this.logout();
@@ -23,7 +23,7 @@ class Auth {
     }
 
     getToken(){
-        return localStorage.getItem('currUser');
+        return localStorage.getItem('id_token');
     }
 }
 

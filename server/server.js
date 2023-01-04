@@ -10,8 +10,10 @@ const PORT = process.env.PORT || 3001;
 const server= new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
   context: authenticate
 });
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
