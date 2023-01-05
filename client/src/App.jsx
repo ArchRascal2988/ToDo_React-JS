@@ -11,8 +11,8 @@ const endpoint= createHttpLink({
 });
 
 const setHeader= setContext((_, {headers}) => {
-    const token= localStorage.getItem('currUser');
-
+    const token= localStorage.getItem('id_token');
+    
     return {
       headers:{
         ...headers,

@@ -6,14 +6,13 @@ const expiration= '24h';
 
 module.exports={
     authenticate: ({req})=>{
-        
         let token= req.body.token || req.headers.authorization || req.query.token;
-        if(req.headers.authorization) token= token.split(' ').pop().trim();
+        if(req.headers.authorization) token = token.split(' ').pop().trim();
+        
         if (!token) return req;
         
         try{
             req.id= verify(token, secret, {maxAge: expiration}).then(({data})=> data);
-            console.log(req.id);
         } catch{
             throw new AuthenticationError("Invalid token");
         }

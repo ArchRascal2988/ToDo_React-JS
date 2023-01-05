@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/Auth';
 
 import { LOGIN, NEW_USER } from '../utils/mutations';
+import { useEffect } from 'react';
 
 
 const UserForm= ()=>{
@@ -16,12 +17,20 @@ const UserForm= ()=>{
     const[login, {error1}]= useMutation(LOGIN);
     const[signup, {error2}]= useMutation(NEW_USER);
 
+    useEffect(()=>{
+        setFormState({
+            username: '',
+            password: ''
+        });
+        console.log(formState)
+    }, [mode])
+
     const handleFormSubmit= async () =>{
         try{
             const {data} = mode? await login({ variables: {...formState}})
             : await signup({ variables: {...formState}});
             
-            Auth.login(data);
+            Auth.login(data.login.token);
         } catch (err){
             console.error(err);
             displayError("Oops something went wrong..");
@@ -30,12 +39,10 @@ const UserForm= ()=>{
     }
 
     const displayError= (err) =>{
-        
-        let message= document.querySelector('#msg');
-        setMsg(err).then(()=> message.style= {...message.style, visiblity: 'visible'});
+        setMsg(err);
 
         setTimeout(()=>{
-            setMsg('').then(()=> message.style= {...message.style, visiblity: 'hidden'});
+            setMsg('');
         }, 5000);
     }
 
@@ -47,15 +54,17 @@ const UserForm= ()=>{
                     e.preventDefault();
                     handleFormSubmit();
                 }}>
-                    <input name='username' type='text' placeholder='Username' onChange={
+                    <input name='username' type='text' placeholder='Username' value={formState.username}
+                    onChange={
                         ({target})=> setFormState({...formState, username: target.value})
                     }></input>
-                    <input name='password' type='password' placeholder='Password' onChange={
+                    <input name='password' type='password' placeholder='Password'  value={formState.password}
+                    onChange={
                         ({target})=> setFormState({...formState, password: target.value})
                     }></input>
                     <input type='submit'></input>
                 </form>
-                <p style={{visiblity: 'hidden', color: 'red'}} id='msg'>{erMsg}</p>
+                <p style={{ color: 'red' }} id='msg'>{erMsg}</p>
                 <button onClick={()=>setMode(!mode)}>Don't Have an Account?</button>
             </div>
         )
@@ -67,10 +76,12 @@ const UserForm= ()=>{
                     e.preventDefault();
                     handleFormSubmit()
                 }}>
-                    <input name='username' type='text' placeholder='Username' onChange={
+                    <input name='username' type='text' placeholder='Username'  value={formState.username}
+                    onChange={
                         ({target})=> setFormState({...formState, username: target.value})
                     }></input>
-                    <input name='password' type='password' placeholder='Password' onChange={
+                    <input name='password' type='password' placeholder='Password' value={formState.password}
+                    onChange={
                         ({target})=> setFormState({...formState, password: target.value})
                     }></input>
                     <input type='submit'></input>

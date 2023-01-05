@@ -3,14 +3,16 @@ import { EDIT_TODO } from "../utils/mutations";
 
 const TodoFocus= ({todo})=>{
 
-    if(todo===''){
-        return;
+    if(!todo){
+        return (
+            <div></div>
+        );
     }
 
 
     return(
         <div></div>
-    )
+    );
 }
 
 

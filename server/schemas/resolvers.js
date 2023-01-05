@@ -5,7 +5,6 @@ const { Todo, User }= require('../models');
 const resolvers= {
     Query:{
         allTodos: async(parent, args, context)=>{
-            console.log(context)
             if(context.id){
                 return await Todo.find({userId: context.id});
             } else throw new AuthenticationError("Need to be logged in to do this.");

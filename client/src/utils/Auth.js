@@ -10,12 +10,8 @@ class Auth {
         window.location.replace('/');
     }
 
-    loggedIn(){
-        return this.getToken() ? true : false;
-    }
-
     checkExpiration(){
-        const { exp }= decode(this.getToken);
+        const { exp }= decode(this.getToken());
 
         if(exp < Date.now()/1000){
             this.logout();
@@ -23,7 +19,9 @@ class Auth {
     }
 
     getToken(){
-        return localStorage.getItem('id_token');
+        const stored= localStorage.getItem('id_token');
+        
+        return stored
     }
 }
 
