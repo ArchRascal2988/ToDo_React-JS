@@ -15,7 +15,7 @@ const Home= ()=>{
 
         return(
             <div>
-                <TodoList todoA={data}></TodoList>
+                <TodoList todoA={data.allTodos}></TodoList>
             </div>
         )   
     } else return (<div>Loading...</div>);

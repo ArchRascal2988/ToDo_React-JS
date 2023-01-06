@@ -8,7 +8,7 @@ import TodoFocus from './TodoFocus';
 
 const TodoList= ({todoA})=>{
     const [todo, setTodo]= useState({});
-
+    console.log(todoA)
 
     return(
         <div>

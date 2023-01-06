@@ -16,6 +16,7 @@ type User{
 
 type Auth{
     token: ID!
+    user: ID!
 }
 
 type Query{

@@ -12,11 +12,12 @@ module.exports={
         if (!token) return req;
         
         try{
-            req.id= verify(token, secret, {maxAge: expiration}).then(({data})=> data);
+            let { data }= verify(token, secret, {maxAge: expiration});
+            req.id= data._id;
         } catch{
             throw new AuthenticationError("Invalid token");
-        }
-        
+        }   
+       
         return req;
     },
     signToken: ({_id})=>{

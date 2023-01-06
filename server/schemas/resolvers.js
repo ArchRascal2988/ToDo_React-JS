@@ -14,7 +14,8 @@ const resolvers= {
         newUser: async(parent, args)=>{
             const newU= await User.create(args);
             return {
-                token: signToken(newU)
+                token: signToken(newU),
+                user: newU._id
             };
         },
         login: async(parent, {username, password})=>{
@@ -23,7 +24,8 @@ const resolvers= {
             
             if(loginU && check){
                 return {
-                    token: signToken(loginU)
+                    token: signToken(loginU),
+                    user: loginU._id
                 };
             } else throw new AuthenticationError("Could not login, username or password is inccorect.");
         },
